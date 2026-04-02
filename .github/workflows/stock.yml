@@ -1,0 +1,37 @@
+name: Stock Monitor Daily
+on:
+  schedule:
+    - cron: '30 16 * * 1-5' # Gira lun-ven alle 17:30 italiane
+  workflow_dispatch:      # Ti permette di lanciarlo a mano per test
+
+jobs:
+  run-monitor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout del codice
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Esegui con Maven
+        run: |
+          mvn clean compile
+          # Esegue la tua classe principale
+          mvn exec:java -Dexec.mainClass="it.stockmonitor.StockMonitor"
+
+      - name: Salva Report e Storico
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          mkdir -p history
+          git add history/*.json
+          git add *.xlsx
+          git commit -m "Aggiornamento automatico titoli" || echo "Nessuna modifica"
+          git push
