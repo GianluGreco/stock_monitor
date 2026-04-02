@@ -1,8 +1,12 @@
 name: Stock Monitor Daily
+
 on:
   schedule:
-    - cron: '30 16 * * 1-5' # Gira lun-ven alle 17:30 italiane
-  workflow_dispatch:      # Ti permette di lanciarlo a mano per test
+    # Gira ogni 15 minuti (0, 15, 30, 45) 
+    # dalle 08:00 alle 16:00 UTC (che sono le 09:00-17:00 in Italia)
+    # dal lunedì al venerdì (1-5)
+    - cron: '0,15,30,45 8-16 * * 1-5'
+  workflow_dispatch:
 
 jobs:
   run-monitor:
