@@ -104,12 +104,9 @@ public class StockMonitor {
         logger.info("--- Rilevazione completata ---");
     }
 
-    public static void main(String[] args) {
-        StockMonitor monitor = new StockMonitor();
-        monitor.start();
-
-        Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            logger.info("Stock Monitor arrestato.")
-        ));
-    }
+   public static void main(String[] args) {
+    StockMonitor monitor = new StockMonitor();
+    monitor.run(); // Esegue l'aggiornamento dei prezzi una sola volta
+    System.exit(0); // Chiude il programma per permettere a GitHub di salvare i file
+}
 }
