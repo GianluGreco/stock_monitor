@@ -1,10 +1,6 @@
 name: Stock Monitor Daily
-
 on:
   schedule:
-    # Gira ogni 15 minuti (0, 15, 30, 45) 
-    # dalle 08:00 alle 16:00 UTC (che sono le 09:00-17:00 in Italia)
-    # dal lunedì al venerdì (1-5)
     - cron: '0,15,30,45 8-16 * * 1-5'
   workflow_dispatch:
 
@@ -27,15 +23,16 @@ jobs:
       - name: Esegui con Maven
         run: |
           mvn clean compile
-          # Esegue la tua classe principale
           mvn exec:java -Dexec.mainClass="it.stockmonitor.StockMonitor"
 
       - name: Salva Report e Storico
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
           mkdir -p history
+          mkdir -p output
           git add history/*.json
-          git add *.xlsx
+          git add output/*.xlsx
           git commit -m "Aggiornamento automatico titoli" || echo "Nessuna modifica"
-          git push
+          git push origin main
