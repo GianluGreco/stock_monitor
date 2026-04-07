@@ -25,26 +25,28 @@ jobs:
           mvn clean compile
           mvn exec:java -Dexec.mainClass="it.stockmonitor.StockMonitor"
 
-      
       - name: Salva Report e Storico
         run: |
-          # 1. Configura l'utente
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # 2. Sincronizza SUBITO (Prima di aggiungere file)
+          # 1. "Congela" i file nuovi creati dal programma Java
+          git stash
+          
+          # 2. Sincronizza con il server
           git pull origin main --rebase
           
-          # 3. Crea le cartelle se mancano
+          # 3. "Scongela" i file
+          git stash pop || echo "Nessun file da ripristinare"
+          
+          # 4. Crea le cartelle se per caso mancano
           mkdir -p history
           mkdir -p output
           
-          # 4. Aggiungi i file generati
+          # 5. Aggiungi e salva tutto
           git add history/*.json
           git add output/*.xlsx
-          
-          # 5. Salva e invia (senza bloccarti se non ci sono modifiche)
-          git commit -m "Aggiornamento automatico titoli" || echo "Nessuna modifica da salvare"
+          git commit -m "Aggiornamento automatico titoli" || echo "Nessuna modifica"
           git push origin main
       
       
