@@ -24,24 +24,24 @@ jobs:
         run: |
           mvn clean compile
           mvn exec:java -Dexec.mainClass="it.stockmonitor.StockMonitor"
-      
+     
       - name: Salva Report e Storico
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Forza lo scaricamento di eventuali modifiche fatte da te nel frattempo
+          # Pulisce eventuali rimasugli e sincronizza
+          git add .
+          git stash || echo "Nulla da mettere in stash"
           git pull origin main --rebase
+          git stash pop || echo "Nulla da ripristinare"
           
-          # Crea le cartelle fisicamente se il programma non l'ha fatto
-          mkdir -p history
-          mkdir -p output
-          
-          # IL COMANDO MAGICO: Aggiunge TUTTI i nuovi file creati (Excel e JSON)
+          # Forza l'aggiunta di TUTTI i file nuovi (Excel e JSON)
+          mkdir -p history output
           git add -A
           
-          # Salva con un messaggio orario per vedere che cambia
-          git commit -m "Update: $(date +'%Y-%m-%d %H:%M:%S')" || echo "Nessuna modifica"
+          # Esegue il commit con la data attuale per conferma visiva
+          git commit -m "Update automatico: $(date +'%H:%M')" || echo "Nessuna modifica rilevata"
           git push origin main
       
       
