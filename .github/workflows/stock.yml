@@ -25,14 +25,18 @@ jobs:
           mvn clean compile
           mvn exec:java -Dexec.mainClass="it.stockmonitor.StockMonitor"
 
+      
       - name: Salva Report e Storico
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
+          # Sincronizza prima di inviare per evitare il [rejected]
+          git pull origin main --rebase
           mkdir -p history
           mkdir -p output
           git add history/*.json
           git add output/*.xlsx
           git commit -m "Aggiornamento automatico titoli" || echo "Nessuna modifica"
           git push origin main
+      
+      
