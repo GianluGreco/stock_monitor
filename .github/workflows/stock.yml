@@ -24,29 +24,24 @@ jobs:
         run: |
           mvn clean compile
           mvn exec:java -Dexec.mainClass="it.stockmonitor.StockMonitor"
-
+      
       - name: Salva Report e Storico
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # 1. "Congela" i file nuovi creati dal programma Java
-          git stash
-          
-          # 2. Sincronizza con il server
+          # Forza lo scaricamento di eventuali modifiche fatte da te nel frattempo
           git pull origin main --rebase
           
-          # 3. "Scongela" i file
-          git stash pop || echo "Nessun file da ripristinare"
-          
-          # 4. Crea le cartelle se per caso mancano
+          # Crea le cartelle fisicamente se il programma non l'ha fatto
           mkdir -p history
           mkdir -p output
           
-          # 5. Aggiungi e salva tutto
-          git add history/*.json
-          git add output/*.xlsx
-          git commit -m "Aggiornamento automatico titoli" || echo "Nessuna modifica"
+          # IL COMANDO MAGICO: Aggiunge TUTTI i nuovi file creati (Excel e JSON)
+          git add -A
+          
+          # Salva con un messaggio orario per vedere che cambia
+          git commit -m "Update: $(date +'%Y-%m-%d %H:%M:%S')" || echo "Nessuna modifica"
           git push origin main
       
       
