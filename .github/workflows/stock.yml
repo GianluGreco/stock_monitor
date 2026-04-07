@@ -28,15 +28,23 @@ jobs:
       
       - name: Salva Report e Storico
         run: |
+          # 1. Configura l'utente
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          # Sincronizza prima di inviare per evitare il [rejected]
+          
+          # 2. Sincronizza SUBITO (Prima di aggiungere file)
           git pull origin main --rebase
+          
+          # 3. Crea le cartelle se mancano
           mkdir -p history
           mkdir -p output
+          
+          # 4. Aggiungi i file generati
           git add history/*.json
           git add output/*.xlsx
-          git commit -m "Aggiornamento automatico titoli" || echo "Nessuna modifica"
+          
+          # 5. Salva e invia (senza bloccarti se non ci sono modifiche)
+          git commit -m "Aggiornamento automatico titoli" || echo "Nessuna modifica da salvare"
           git push origin main
       
       
