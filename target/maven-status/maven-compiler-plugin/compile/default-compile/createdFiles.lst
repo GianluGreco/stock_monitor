@@ -2,8 +2,8 @@ it/stockmonitor/service/IndicatorService.class
 it/stockmonitor/model/Signal$Type.class
 it/stockmonitor/model/PortfolioAdvice$Action.class
 it/stockmonitor/service/ExcelService.class
-it/stockmonitor/model/PortfolioAdvice.class
 it/stockmonitor/model/StockQuote.class
+it/stockmonitor/model/PortfolioAdvice.class
 it/stockmonitor/service/HistoryService.class
 it/stockmonitor/service/PortfolioService.class
 it/stockmonitor/service/ExcelService$1.class
@@ -15,7 +15,7 @@ it/stockmonitor/util/ConfigLoader.class
 it/stockmonitor/model/PortfolioAdvice$1.class
 it/stockmonitor/service/HistoryService$1.class
 it/stockmonitor/service/ExcelService$SheetInitializer.class
-it/stockmonitor/service/SignalService.class
 it/stockmonitor/util/SchedulerUtil.class
+it/stockmonitor/service/SignalService.class
 it/stockmonitor/util/ConfigLoader$ScheduleMode.class
 it/stockmonitor/service/QuoteService.class
