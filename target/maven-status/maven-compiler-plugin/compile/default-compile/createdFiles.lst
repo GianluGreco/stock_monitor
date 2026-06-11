@@ -2,8 +2,8 @@ it/stockmonitor/service/IndicatorService.class
 it/stockmonitor/model/Signal$Type.class
 it/stockmonitor/model/PortfolioAdvice$Action.class
 it/stockmonitor/service/ExcelService.class
-it/stockmonitor/model/StockQuote.class
 it/stockmonitor/model/PortfolioAdvice.class
+it/stockmonitor/model/StockQuote.class
 it/stockmonitor/service/HistoryService.class
 it/stockmonitor/service/PortfolioService.class
 it/stockmonitor/service/ExcelService$1.class
