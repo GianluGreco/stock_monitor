@@ -15,7 +15,7 @@ it/stockmonitor/util/ConfigLoader.class
 it/stockmonitor/model/PortfolioAdvice$1.class
 it/stockmonitor/service/HistoryService$1.class
 it/stockmonitor/service/ExcelService$SheetInitializer.class
-it/stockmonitor/util/SchedulerUtil.class
 it/stockmonitor/service/SignalService.class
+it/stockmonitor/util/SchedulerUtil.class
 it/stockmonitor/util/ConfigLoader$ScheduleMode.class
 it/stockmonitor/service/QuoteService.class
